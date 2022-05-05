@@ -78,7 +78,7 @@ ARG APP_ENV=prod
 # prevent the reinstallation of vendors at every changes in the source code
 COPY composer.* symfony.lock ./
 RUN set -eux; \
-    composer install --prefer-dist --no-autoloader --no-scripts --no-progress; \
+    composer install --prefer-dist --no-autoloader --no-interaction --no-scripts --no-progress; \
     composer clear-cache
 
 # copy only specifically what we need
@@ -95,8 +95,8 @@ RUN set -eux; \
     composer dump-autoload --classmap-authoritative; \
     APP_SECRET='' composer run-script post-install-cmd; \
     chmod +x bin/console; sync; \
-    bin/console sylius:install:assets; \
-    bin/console sylius:theme:assets:install public
+    bin/console sylius:install:assets --no-interaction; \
+    bin/console sylius:theme:assets:install public --no-interaction
 
 VOLUME /srv/sylius/var
 
@@ -118,6 +118,7 @@ RUN set -eux; \
 		gcc \
 		git \
 		make \
+		python2 \
 	;
 
 # prevent the reinstallation of vendors at every changes in the source code
@@ -141,7 +142,7 @@ COPY docker/node/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
 ENTRYPOINT ["docker-entrypoint"]
-CMD ["yarn", "watch"]
+CMD ["yarn", "build"]
 
 FROM nginx:${NGINX_VERSION}-alpine AS sylius_nginx
 

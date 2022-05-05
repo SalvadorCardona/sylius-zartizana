@@ -16,3 +16,6 @@ api-schema:
 	$(PHP_CMD) bin/console api:openapi:export  -o ./api.json
 	$(NODE_CMD) npx openapi-typescript api.json --output ./front/src/schema/app-api-schema.ts
 	rm -f api.json
+
+server-dev:
+	docker-compose up
