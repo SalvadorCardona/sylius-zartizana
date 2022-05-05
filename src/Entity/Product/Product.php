@@ -9,17 +9,12 @@ use Sylius\Component\Core\Model\Product as BaseProduct;
 use Sylius\Component\Product\Model\ProductTranslationInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="sylius_product")
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'sylius_product')]
 class Product extends BaseProduct
 {
-    /**
-     * @Groups({"shop:product:read", "list_product"})
-     */
+    #[Groups(['shop:product:read', 'list_product'])]
     protected $mainTaxon;
-
     protected function createTranslation(): ProductTranslationInterface
     {
         return new ProductTranslation();
