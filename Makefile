@@ -19,3 +19,7 @@ api-schema:
 
 server-dev:
 	docker-compose up
+
+lint:
+	php vendor/bin/php-cs-fixer fix
+	php vendor/bin/phpstan analyse

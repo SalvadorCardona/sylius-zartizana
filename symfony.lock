@@ -370,6 +370,9 @@
     "phpstan/phpstan": {
         "version": "1.6.7"
     },
+    "phpstan/phpstan-symfony": {
+        "version": "1.1.8"
+    },
     "phpunit/php-code-coverage": {
         "version": "5.3.2"
     },
