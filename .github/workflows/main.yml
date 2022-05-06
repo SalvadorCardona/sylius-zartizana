@@ -25,7 +25,5 @@ jobs:
                 with:
                     php-version: '8.0'
                     tools: phpstan, phpcs
-            -   name: PHP CS
-                run: phpcs 
             -   name: PHP Stan
                 run: phpstan analyse src
