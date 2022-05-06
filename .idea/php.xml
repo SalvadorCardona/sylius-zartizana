@@ -250,6 +250,7 @@
       <path value="$PROJECT_DIR$/vendor/phpstan/phpstan-symfony" />
       <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
       <path value="$PROJECT_DIR$/vendor/symfony/maker-bundle" />
+      <path value="$PROJECT_DIR$/vendor/phpstan/phpstan-doctrine" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

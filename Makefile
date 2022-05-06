@@ -26,3 +26,6 @@ lint:
 
 lint-fix:
 	$(PHP_CMD) vendor/bin/phpcs
+
+rector:
+	$(PHP_CMD) vendor/bin/rector process src

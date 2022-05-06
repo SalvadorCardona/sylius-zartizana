@@ -17,13 +17,14 @@ class MarketplaceVendor
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\OneToOne(inversedBy: 'marketplaceVendor', targetEntity: ShopUser::class, cascade: ['persist', 'remove'])]
-    private $user;
+    private ?ShopUser $user;
 
+    /** @var Collection<int, Product> */
     #[ORM\OneToMany(mappedBy: 'marketplaceVendor', targetEntity: Product::class)]
-    private $products;
+    private Collection $products;
 
     public function __construct()
     {
