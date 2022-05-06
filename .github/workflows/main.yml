@@ -20,11 +20,13 @@ jobs:
 
         # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
-            - uses: actions/checkout@v2
-            - name: PHPStan
-              uses: docker://oskarstark/phpstan-ga
-              with:
-                  args: analyse src/
-            - uses: chekalsky/phpcs-action@v1
-              with:
-                  enable_warnings: true            
+            -   name: Install PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.0'
+            -   name: Composer Install
+                run: composer install --ansi --prefer-dist --no-interaction --no-progress
+            -   name: PHP CS
+                run: vendor/bin/phpcs
+            -   name: PHP Stan
+                run: vendor/bin/phpstan analyse
