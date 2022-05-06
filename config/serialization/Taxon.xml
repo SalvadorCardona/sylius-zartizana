@@ -15,6 +15,7 @@
             <group>shop:product:read</group>
         </attribute>
         <attribute name="children">
+            <group>shop:product:read</group>
         </attribute>
     </class>
 </serializer>

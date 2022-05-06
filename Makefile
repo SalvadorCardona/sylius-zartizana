@@ -21,5 +21,8 @@ server-dev:
 	docker-compose up
 
 lint:
-	php vendor/bin/php-cs-fixer fix
-	php vendor/bin/phpstan analyse
+	$(PHP_CMD) vendor/bin/phpcs
+	$(PHP_CMD) vendor/bin/phpstan analyse
+
+lint-fix:
+	$(PHP_CMD) vendor/bin/phpcs
