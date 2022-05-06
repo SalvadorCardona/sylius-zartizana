@@ -26,4 +26,4 @@ jobs:
                     php-version: '8.0'
                     tools: phpstan, phpcs
             -   name: PHP Stan
-                run: phpstan analyse ./../src
+                run: phpstan analyse ./src
