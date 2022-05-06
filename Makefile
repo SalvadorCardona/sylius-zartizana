@@ -17,8 +17,11 @@ api-schema:
 	$(NODE_CMD) npx openapi-typescript api.json --output ./front/src/schema/app-api-schema.ts
 	rm -f api.json
 
-server-dev:
-	docker-compose up
+start-prod:
+	APP_ENV=prod docker-compose up -d
+
+start-dev:
+	APP_ENV=dev docker-compose up
 
 lint:
 	$(PHP_CMD) vendor/bin/phpcs
