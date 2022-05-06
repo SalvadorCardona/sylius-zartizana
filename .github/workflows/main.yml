@@ -22,8 +22,6 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - uses: php-actions/phpstan@v3
-              with:
-                  path: src/
             - uses: chekalsky/phpcs-action@v1
               with:
                   enable_warnings: true            
