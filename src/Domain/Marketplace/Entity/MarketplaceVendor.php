@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Entity\Marketplace;
+namespace App\Domain\Marketplace\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Domain\Marketplace\Repository\MarketplaceVendorRepository;
 use App\Entity\Product\Product;
 use App\Entity\User\ShopUser;
-use App\Repository\Marketplace\MarketplaceVendorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: MarketplaceVendorRepository::class)]
 #[ApiResource]
@@ -16,8 +17,8 @@ class MarketplaceVendor
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private ?int $id;
+    #[ORM\Column(type: 'uuid', unique: true)]
+    private ?Uuid $id;
 
     #[ORM\OneToOne(inversedBy: 'marketplaceVendor', targetEntity: ShopUser::class, cascade: ['persist', 'remove'])]
     private ?ShopUser $user;
@@ -25,6 +26,9 @@ class MarketplaceVendor
     /** @var Collection<int, Product> */
     #[ORM\OneToMany(mappedBy: 'marketplaceVendor', targetEntity: Product::class)]
     private Collection $products;
+
+    #[ORM\OneToOne(mappedBy: 'marketplaceVendor', targetEntity: MarketPlaceVendorAddress::class, cascade: ['persist', 'remove'])]
+    private ?MarketPlaceVendorAddress $marketPlaceVendorAddress;
 
     public function __construct()
     {
@@ -74,6 +78,28 @@ class MarketplaceVendor
                 $product->setMarketplaceVendor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMarketPlaceVendorAddress(): ?MarketPlaceVendorAddress
+    {
+        return $this->marketPlaceVendorAddress;
+    }
+
+    public function setMarketPlaceVendorAddress(?MarketPlaceVendorAddress $marketPlaceVendorAddress): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($marketPlaceVendorAddress === null && $this->marketPlaceVendorAddress !== null) {
+            $this->marketPlaceVendorAddress->setMarketplaceVendor(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($marketPlaceVendorAddress !== null && $marketPlaceVendorAddress->getMarketplaceVendor() !== $this) {
+            $marketPlaceVendorAddress->setMarketplaceVendor($this);
+        }
+
+        $this->marketPlaceVendorAddress = $marketPlaceVendorAddress;
 
         return $this;
     }

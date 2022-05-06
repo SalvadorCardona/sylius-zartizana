@@ -20,6 +20,7 @@ ARG APCU_VERSION=5.1.17
 RUN set -eux; \
 	apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
+        autoconf \
 		coreutils \
 		freetype-dev \
 		icu-dev \
@@ -42,11 +43,13 @@ RUN set -eux; \
 		zip \
 	; \
 	pecl install \
+        xdebug \
 		apcu-${APCU_VERSION} \
 	; \
 	pecl clear-cache; \
 	docker-php-ext-enable \
 		apcu \
+        xdebug \
 		opcache \
 	; \
 	\

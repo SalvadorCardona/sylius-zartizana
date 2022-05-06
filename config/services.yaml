@@ -14,7 +14,7 @@ services:
 
         # Allows optimizing the container by removing unused services; this also means
         # fetching services directly from the container via $container->get() won't work
-        public: false
+        public: true
 
     _instanceof:
         Sylius\Bundle\ResourceBundle\Controller\ResourceController:
@@ -33,3 +33,9 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+
+    App\Domain\Marketplace\DataPersister\MarketPlaceVendorCreatePersister:
+        arguments:
+            $userContext: '@Sylius\Bundle\ApiBundle\Context\UserContextInterface'
+        tags:
+            - { name: 'api_platform.item_data_provider', priority: '99'}

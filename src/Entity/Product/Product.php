@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity\Product;
 
-use App\Entity\Marketplace\MarketplaceVendor;
+use App\Domain\Marketplace\Entity\MarketplaceVendor;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Product as BaseProduct;
 use Sylius\Component\Product\Model\ProductTranslationInterface;

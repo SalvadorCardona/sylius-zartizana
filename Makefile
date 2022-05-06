@@ -21,7 +21,7 @@ start-prod:
 	APP_ENV=prod docker-compose up -d
 
 start-dev:
-	APP_ENV=dev docker-compose up
+	CURRENT_UID=$(id -u):$(id -g); APP_ENV=dev docker-compose up
 
 lint:
 	$(PHP_CMD) vendor/bin/phpcs

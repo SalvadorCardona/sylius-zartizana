@@ -12,6 +12,7 @@ services:
         #   - quay.io/sylius/nodejs:latest
         #   - quay.io/sylius/nginx:latest
     image: php:latest
+    user: ${CURRENT_UID}
     depends_on:
       - mysql
     environment:
@@ -29,7 +30,10 @@ services:
       # if you develop on Linux, you may use a bind-mounted host directory instead
       # - ./public/media:/srv/sylius/public/media:rw
       - public-media:/srv/sylius/public/media:rw
-
+      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
+    
   mysql:
     image: percona:5.7
     environment:

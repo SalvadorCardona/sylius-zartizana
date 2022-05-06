@@ -1,2 +1,6 @@
+controllers:
+    resource: ../src/Domain/
+    type: annotation
+
 sylius_paypal_webhook:
     resource: "@SyliusPayPalPlugin/Resources/config/webhook_routing.yaml"
