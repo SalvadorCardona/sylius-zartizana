@@ -24,9 +24,8 @@ jobs:
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: '8.0'
-            -   name: Composer Install
-                run: composer install --ansi --prefer-dist --no-interaction --no-progress
+                    tools: phpstan, phpcs
             -   name: PHP CS
-                run: vendor/bin/phpcs
+                run: phpcs -q --report=checkstyle src
             -   name: PHP Stan
-                run: vendor/bin/phpstan analyse
+                run: phpstan analyse src
