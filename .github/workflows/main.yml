@@ -32,4 +32,4 @@ jobs:
             -   name: PHP Stan
                 run: phpstan analyse ./src
             -   name: Run phpcs
-                run: phpcs src
+                run: phpcs ./src
