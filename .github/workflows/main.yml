@@ -31,3 +31,5 @@ jobs:
                 run: composer install --prefer-dist
             -   name: PHP Stan
                 run: phpstan analyse ./src
+            -   name: Run phpcs
+                run: phpcs -q --report=checkstyle src | cs2pr
