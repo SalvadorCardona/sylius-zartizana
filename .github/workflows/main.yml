@@ -21,7 +21,10 @@ jobs:
         # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
             - uses: actions/checkout@v2
-            - uses: php-actions/phpstan@v3
+            - name: PHPStan
+              uses: docker://oskarstark/phpstan-ga
+              with:
+                  args: analyse src/
             - uses: chekalsky/phpcs-action@v1
               with:
                   enable_warnings: true            
