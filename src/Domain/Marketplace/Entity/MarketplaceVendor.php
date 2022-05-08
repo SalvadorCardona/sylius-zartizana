@@ -27,8 +27,6 @@ class MarketplaceVendor
     #[ORM\OneToMany(mappedBy: 'marketplaceVendor', targetEntity: Product::class)]
     private Collection $products;
 
-    #[ORM\OneToOne(mappedBy: 'marketplaceVendor', targetEntity: MarketPlaceVendorAddress::class, cascade: ['persist', 'remove'])]
-    private ?MarketPlaceVendorAddress $marketPlaceVendorAddress;
 
     public function __construct()
     {
@@ -82,25 +80,4 @@ class MarketplaceVendor
         return $this;
     }
 
-    public function getMarketPlaceVendorAddress(): ?MarketPlaceVendorAddress
-    {
-        return $this->marketPlaceVendorAddress;
-    }
-
-    public function setMarketPlaceVendorAddress(?MarketPlaceVendorAddress $marketPlaceVendorAddress): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($marketPlaceVendorAddress === null && $this->marketPlaceVendorAddress !== null) {
-            $this->marketPlaceVendorAddress->setMarketplaceVendor(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($marketPlaceVendorAddress !== null && $marketPlaceVendorAddress->getMarketplaceVendor() !== $this) {
-            $marketPlaceVendorAddress->setMarketplaceVendor($this);
-        }
-
-        $this->marketPlaceVendorAddress = $marketPlaceVendorAddress;
-
-        return $this;
-    }
 }

@@ -18,8 +18,7 @@ class MarketPlaceVendorAddress
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $city;
 
-    #[ORM\OneToOne(inversedBy: 'marketPlaceVendorAddress', targetEntity: MarketplaceVendor::class, cascade: ['persist', 'remove'])]
-    private ?MarketplaceVendor $marketplaceVendor;
+
 
     public function getId(): ?int
     {
@@ -38,15 +37,4 @@ class MarketPlaceVendorAddress
         return $this;
     }
 
-    public function getMarketplaceVendor(): ?MarketplaceVendor
-    {
-        return $this->marketplaceVendor;
-    }
-
-    public function setMarketplaceVendor(?MarketplaceVendor $marketplaceVendor): self
-    {
-        $this->marketplaceVendor = $marketplaceVendor;
-
-        return $this;
-    }
 }

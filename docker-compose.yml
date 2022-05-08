@@ -58,7 +58,7 @@ services:
       - php
     environment:
       - GULP_ENV=dev
-      - PHP_HOST=php
+      - PHP_HOST=phpd
       - PHP_PORT=9000
       - NODE_ENV=developement
 #    command: >
@@ -68,7 +68,6 @@ services:
       - ./public:/srv/sylius/public:rw,delegated
     ports:
       - "35729:35729"
-#      - "3000:3000"
 
   nginx:
     build:

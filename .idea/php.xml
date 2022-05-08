@@ -257,8 +257,8 @@
   </component>
   <component name="PhpInterpreters">
     <interpreters>
-      <interpreter id="9973e761-2be8-4e4f-ae05-67b9382c8a06" name="Ubuntu-20.04" home="\\wsl$\Ubuntu-20.04/usr/bin/php" debugger_id="php.debugger.XDebug">
-        <remote_data INTERPRETER_PATH="/usr/bin/php" HELPERS_PATH="" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DISTRIBUTION_ID="Ubuntu-20.04" />
+      <interpreter id="9973e761-2be8-4e4f-ae05-67b9382c8a06" name="Ubuntu-20.04" home="\\wsl$\Ubuntu/usr/bin/php" debugger_id="php.debugger.XDebug">
+        <remote_data INTERPRETER_PATH="/usr/bin/php" HELPERS_PATH="" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DISTRIBUTION_ID="Ubuntu" />
       </interpreter>
       <interpreter id="668af7eb-f278-4f45-8236-64ef56586fea" name="php:latest" home="docker://DATA" debugger_id="php.debugger.XDebug">
         <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker" DOCKER_IMAGE_NAME="php:latest" DOCKER_REMOTE_PROJECT_PATH="/opt/project" />
@@ -394,6 +394,16 @@
         </phpinfo>
       </interpreter>
     </phpInfoCache>
+  </component>
+  <component name="PhpProjectServersManager">
+    <servers>
+      <server host="localhost" id="2b059880-b4be-43d2-a33b-36bee5eb9721" name="My Server" use_path_mappings="true">
+        <path_mappings>
+          <mapping local-root="$PROJECT_DIR$" remote-root="/srv/sylius" />
+          <mapping local-root="$PROJECT_DIR$/public" remote-root="/srv/sylius/public" />
+        </path_mappings>
+      </server>
+    </servers>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
   <component name="PhpStan">

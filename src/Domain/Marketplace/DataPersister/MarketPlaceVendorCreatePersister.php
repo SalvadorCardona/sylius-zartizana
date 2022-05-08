@@ -43,8 +43,8 @@ class MarketPlaceVendorCreatePersister implements DataPersisterInterface
      */
     public function persist($data)
     {
+        /** @var ShopUser|null $user */
         $user = $this->userContext->getUser();
-        /** @var ShopUser|null $token */
 
         if (!$user) {
             throw new BadRequestException((string) $user);

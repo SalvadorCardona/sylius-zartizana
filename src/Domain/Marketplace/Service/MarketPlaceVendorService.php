@@ -29,6 +29,10 @@ class MarketPlaceVendorService
             throw new Exception('User not Found for create vendor');
         }
 
+        if ($shopUser->getMarketplaceVendor()) {
+            throw new Exception('User is Vendor');
+        }
+
         $marketPlaceVendor = new MarketPlaceVendor();
         $marketPlaceVendor->setUser($shopUser);
         $marketPlaceVendor->setMarketPlaceVendorAddress($marketPlaceVendorAddress);
