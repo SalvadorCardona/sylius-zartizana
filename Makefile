@@ -2,6 +2,8 @@ CONTAINER_NAME_PHP=zartizana_php
 CONTAINER_NAME_NODE=zartizana_node
 PHP_CMD=docker exec $(CONTAINER_NAME_PHP)
 NODE_CMD=docker exec $(CONTAINER_NAME_NODE)
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
 
 bash-php:
 	docker exec -it $(CONTAINER_NAME_PHP) sh
@@ -21,7 +23,7 @@ start-prod:
 	APP_ENV=prod docker-compose up -d
 
 start-dev:
-	CURRENT_UID=$(id -u):$(id -g); APP_ENV=dev docker-compose up
+	APP_ENV=dev docker-compose up
 
 lint:
 	$(PHP_CMD) vendor/bin/phpcs

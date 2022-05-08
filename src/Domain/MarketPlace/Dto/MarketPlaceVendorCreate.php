@@ -2,11 +2,11 @@
 declare(strict_types=1);
 
 
-namespace App\Domain\Marketplace\Dto;
+namespace App\Domain\MarketPlace\Dto;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Domain\Marketplace\Entity\MarketPlaceVendorAddress;
+use App\Domain\MarketPlace\Entity\MarketPlaceVendorAddress;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(

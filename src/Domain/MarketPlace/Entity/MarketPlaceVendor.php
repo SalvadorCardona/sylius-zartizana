@@ -1,23 +1,25 @@
 <?php
 
-namespace App\Domain\Marketplace\Entity;
+namespace App\Domain\MarketPlace\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Domain\Marketplace\Repository\MarketplaceVendorRepository;
+use App\Domain\MarketPlace\Repository\MarketPlaceVendorRepository;
 use App\Entity\Product\Product;
 use App\Entity\User\ShopUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Id\UuidGenerator;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity(repositoryClass: MarketplaceVendorRepository::class)]
+#[ORM\Entity(repositoryClass: MarketPlaceVendorRepository::class)]
 #[ApiResource]
-class MarketplaceVendor
+class MarketPlaceVendor
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column(type: 'uuid', unique: true)]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     private ?Uuid $id;
 
     #[ORM\OneToOne(inversedBy: 'marketplaceVendor', targetEntity: ShopUser::class, cascade: ['persist', 'remove'])]
@@ -27,13 +29,15 @@ class MarketplaceVendor
     #[ORM\OneToMany(mappedBy: 'marketplaceVendor', targetEntity: Product::class)]
     private Collection $products;
 
+    #[ORM\OneToOne(inversedBy: 'marketPlaceVendor', targetEntity: MarketPlaceVendorAddress::class, cascade: ['persist', 'remove'])]
+    private MarketPlaceVendorAddress $marketPlaceVendorAddress;
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
@@ -62,7 +66,7 @@ class MarketplaceVendor
     {
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
-            $product->setMarketplaceVendor($this);
+            $product->setMarketPlaceVendor($this);
         }
 
         return $this;
@@ -72,10 +76,22 @@ class MarketplaceVendor
     {
         if ($this->products->removeElement($product)) {
             // set the owning side to null (unless already changed)
-            if ($product->getMarketplaceVendor() === $this) {
-                $product->setMarketplaceVendor(null);
+            if ($product->getMarketPlaceVendor() === $this) {
+                $product->setMarketPlaceVendor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMarketPlaceVendorAddress(): ?self
+    {
+        return $this->marketPlaceVendorAddress;
+    }
+
+    public function setMarketPlaceVendorAddress(?MarketPlaceVendorAddress $marketPlaceVendorAddress): self
+    {
+        $this->marketPlaceVendorAddress = $marketPlaceVendorAddress;
 
         return $this;
     }

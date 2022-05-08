@@ -2,12 +2,12 @@
 declare(strict_types=1);
 
 
-namespace App\Domain\Marketplace\DataPersister;
+namespace App\Domain\MarketPlace\DataPersister;
 
 
 use ApiPlatform\Core\DataPersister\DataPersisterInterface;
-use App\Domain\Marketplace\Dto\MarketPlaceVendorCreate;
-use App\Domain\Marketplace\Service\MarketPlaceVendorService;
+use App\Domain\MarketPlace\Dto\MarketPlaceVendorCreate;
+use App\Domain\MarketPlace\Service\MarketPlaceVendorService;
 use App\Entity\User\ShopUser;
 use Exception;
 use Sylius\Bundle\ApiBundle\Context\UserContextInterface;
@@ -51,10 +51,14 @@ class MarketPlaceVendorCreatePersister implements DataPersisterInterface
         }
 
         try {
-            $this->martketplaceVendorService->createVendor($user->getId(), $data->getMarketPlaceVendorAddress());
+            $marketPlaceVendor = $this->martketplaceVendorService->createVendor($user->getId(), $data->getMarketPlaceVendorAddress());
         } catch (Exception $e) {
             throw new BadRequestException($e->getMessage());
         }
+
+        $data->setMarketPlaceVendorId($marketPlaceVendor->getId());
+
+        return $data;
     }
 
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity\Product;
 
-use App\Domain\Marketplace\Entity\MarketplaceVendor;
+use App\Domain\MarketPlace\Entity\MarketPlaceVendor;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Product as BaseProduct;
 use Sylius\Component\Product\Model\ProductTranslationInterface;
@@ -13,20 +13,20 @@ use Sylius\Component\Product\Model\ProductTranslationInterface;
 #[ORM\Table(name: 'sylius_product')]
 class Product extends BaseProduct
 {
-    #[ORM\ManyToOne(targetEntity: MarketplaceVendor::class, inversedBy: 'products')]
-    private ?MarketplaceVendor $marketplaceVendor;
+    #[ORM\ManyToOne(targetEntity: MarketPlaceVendor::class, inversedBy: 'products')]
+    private ?MarketPlaceVendor $marketplaceVendor;
 
     protected function createTranslation(): ProductTranslationInterface
     {
         return new ProductTranslation();
     }
 
-    public function getMarketplaceVendor(): ?MarketplaceVendor
+    public function getMarketPlaceVendor(): ?MarketPlaceVendor
     {
         return $this->marketplaceVendor;
     }
 
-    public function setMarketplaceVendor(?MarketplaceVendor $marketplaceVendor): self
+    public function setMarketPlaceVendor(?MarketPlaceVendor $marketplaceVendor): self
     {
         $this->marketplaceVendor = $marketplaceVendor;
 

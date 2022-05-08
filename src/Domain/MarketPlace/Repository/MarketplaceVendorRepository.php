@@ -1,33 +1,33 @@
 <?php
 
-namespace App\Domain\Marketplace\Repository;
+namespace App\Domain\MarketPlace\Repository;
 
-use App\Domain\Marketplace\Entity\MarketplaceVendor;
+use App\Domain\MarketPlace\Entity\MarketPlaceVendor;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<MarketplaceVendor>
+ * @extends ServiceEntityRepository<MarketPlaceVendor>
  *
- * @method MarketplaceVendor|null find($id, $lockMode = null, $lockVersion = null)
- * @method MarketplaceVendor|null findOneBy(array $criteria, array $orderBy = null)
- * @method MarketplaceVendor[]    findAll()
- * @method MarketplaceVendor[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method MarketPlaceVendor|null find($id, $lockMode = null, $lockVersion = null)
+ * @method MarketPlaceVendor|null findOneBy(array $criteria, array $orderBy = null)
+ * @method MarketPlaceVendor[]    findAll()
+ * @method MarketPlaceVendor[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MarketplaceVendorRepository extends ServiceEntityRepository
+class MarketPlaceVendorRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, MarketplaceVendor::class);
+        parent::__construct($registry, MarketPlaceVendor::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(MarketplaceVendor $entity, bool $flush = true): void
+    public function add(MarketPlaceVendor $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class MarketplaceVendorRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(MarketplaceVendor $entity, bool $flush = true): void
+    public function remove(MarketPlaceVendor $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -48,7 +48,7 @@ class MarketplaceVendorRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return MarketplaceVendor[] Returns an array of MarketplaceVendor objects
+    //  * @return MarketPlaceVendor[] Returns an array of MarketPlaceVendor objects
     //  */
     /*
     public function findByExampleField($value)
@@ -65,7 +65,7 @@ class MarketplaceVendorRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?MarketplaceVendor
+    public function findOneBySomeField($value): ?MarketPlaceVendor
     {
         return $this->createQueryBuilder('m')
             ->andWhere('m.exampleField = :val')

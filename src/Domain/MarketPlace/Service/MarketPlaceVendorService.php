@@ -2,11 +2,10 @@
 declare(strict_types=1);
 
 
-namespace App\Domain\Marketplace\Service;
+namespace App\Domain\MarketPlace\Service;
 
-
-use App\Domain\Marketplace\Entity\MarketplaceVendor;
-use App\Domain\Marketplace\Entity\MarketPlaceVendorAddress;
+use App\Domain\MarketPlace\Entity\MarketPlaceVendor;
+use App\Domain\MarketPlace\Entity\MarketPlaceVendorAddress;
 use App\Entity\User\ShopUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -20,7 +19,7 @@ class MarketPlaceVendorService
     /**
      * @throws Exception
      */
-    public function createVendor(int $shopUserId, MarketPlaceVendorAddress $marketPlaceVendorAddress): void {
+    public function createVendor(int $shopUserId, MarketPlaceVendorAddress $marketPlaceVendorAddress): MarketPlaceVendor {
         $repository = $this->entityManager->getRepository(ShopUser::class);
         /** @var ShopUser|null $shopUser */
         $shopUser = $repository->findOneBy(['id' => $shopUserId]);
@@ -29,7 +28,7 @@ class MarketPlaceVendorService
             throw new Exception('User not Found for create vendor');
         }
 
-        if ($shopUser->getMarketplaceVendor()) {
+        if ($shopUser->getMarketPlaceVendor()) {
             throw new Exception('User is Vendor');
         }
 
@@ -38,5 +37,8 @@ class MarketPlaceVendorService
         $marketPlaceVendor->setMarketPlaceVendorAddress($marketPlaceVendorAddress);
 
         $this->entityManager->persist($marketPlaceVendor);
+        $this->entityManager->flush();
+
+        return $marketPlaceVendor;
     }
 }

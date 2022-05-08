@@ -34,7 +34,7 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    App\Domain\Marketplace\DataPersister\MarketPlaceVendorCreatePersister:
+    App\Domain\MarketPlace\DataPersister\MarketPlaceVendorCreatePersister:
         arguments:
             $userContext: '@Sylius\Bundle\ApiBundle\Context\UserContextInterface'
         tags:

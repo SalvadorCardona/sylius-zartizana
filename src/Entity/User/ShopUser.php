@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity\User;
 
-use App\Domain\Marketplace\Entity\MarketplaceVendor;
+use App\Domain\MarketPlace\Entity\MarketPlaceVendor;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\ShopUser as BaseShopUser;
 
@@ -12,15 +12,15 @@ use Sylius\Component\Core\Model\ShopUser as BaseShopUser;
 #[ORM\Table(name: 'sylius_shop_user')]
 class ShopUser extends BaseShopUser
 {
-    #[ORM\OneToOne(mappedBy: 'user', targetEntity: MarketplaceVendor::class, cascade: ['persist', 'remove'])]
-    private ?MarketplaceVendor $marketplaceVendor;
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: MarketPlaceVendor::class, cascade: ['persist', 'remove'])]
+    private ?MarketPlaceVendor $marketplaceVendor;
 
-    public function getMarketplaceVendor(): ?MarketplaceVendor
+    public function getMarketPlaceVendor(): ?MarketPlaceVendor
     {
         return $this->marketplaceVendor;
     }
 
-    public function setMarketplaceVendor(?MarketplaceVendor $marketplaceVendor): self
+    public function setMarketPlaceVendor(?MarketPlaceVendor $marketplaceVendor): self
     {
         // unset the owning side of the relation if necessary
         if ($marketplaceVendor === null && $this->marketplaceVendor !== null) {
