@@ -6,6 +6,7 @@ namespace App\Domain\MarketPlace\Dto;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Domain\MarketPlace\Entity\MarketPlaceVendor;
 use App\Domain\MarketPlace\Entity\MarketPlaceVendorAddress;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -14,7 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'create_vendor' => [
             'method' => 'POST',
             'path' => '/shop/create-vendor',
-            'denormalization_context' => ['groups' => 'shop:create:vendor'],
+            'denormalization_context' => ['groups' => 'shop:create:vendor']
         ]
     ],
     itemOperations: []
