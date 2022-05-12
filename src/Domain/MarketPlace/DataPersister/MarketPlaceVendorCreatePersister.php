@@ -23,19 +23,10 @@ class MarketPlaceVendorCreatePersister implements DataPersisterInterface
     {
     }
 
-//    public function __construct(private TokenStorageInterface $security, private MarketPlaceVendorService $martketplaceVendorService, private UserContextInterface $userContext)
-//    {
-//    }
-
-//    public function __construct(private Security $security, private MarketPlaceVendorService $martketplaceVendorService)
-//    {
-//    }
-
     public function supports($data): bool
     {
         return $data instanceof MarketPlaceVendorCreate;
     }
-
 
     /**
      * @param MarketPlaceVendorCreate $data
