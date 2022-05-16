@@ -37,5 +37,3 @@ services:
     App\Domain\MarketPlace\DataPersister\MarketPlaceVendorCreatePersister:
         arguments:
             $userContext: '@Sylius\Bundle\ApiBundle\Context\UserContextInterface'
-        tags:
-            - { name: 'api_platform.item_data_provider', priority: '99'}
