@@ -30,7 +30,8 @@ lint:
 	$(PHP_CMD) vendor/bin/phpstan analyse
 
 lint-fix:
-	$(PHP_CMD) vendor/bin/phpcs
+	#$(PHP_CMD) vendor/bin/phpcs
+	$(PHP_CMD) vendor/bin/php-cs-fixer fix src
 
 rector:
 	$(PHP_CMD) vendor/bin/rector process src

@@ -29,7 +29,12 @@ class MarketPlaceVendor
     #[ORM\OneToMany(mappedBy: 'marketplaceVendor', targetEntity: Product::class)]
     private Collection $products;
 
-    #[ORM\OneToOne(inversedBy: 'marketPlaceVendor', targetEntity: MarketPlaceVendorAddress::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(
+        inversedBy: 'marketPlaceVendor',
+        targetEntity: MarketPlaceVendorAddress::class,
+        cascade: ['persist', 'remove']
+    )
+    ]
     private MarketPlaceVendorAddress $marketPlaceVendorAddress;
 
     public function __construct()
@@ -84,7 +89,7 @@ class MarketPlaceVendor
         return $this;
     }
 
-    public function getMarketPlaceVendorAddress(): ?self
+    public function getMarketPlaceVendorAddress(): ?MarketPlaceVendorAddress
     {
         return $this->marketPlaceVendorAddress;
     }
@@ -95,5 +100,4 @@ class MarketPlaceVendor
 
         return $this;
     }
-
 }

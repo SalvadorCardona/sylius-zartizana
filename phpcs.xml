@@ -20,4 +20,12 @@
     </rule>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
     <rule ref="Generic.Formatting.SpaceAfterCast"/>
+
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="0"/>
+        </properties>
+        <exclude-pattern type="relative">src/Migrations/**</exclude-pattern>
+    </rule>
 </ruleset>

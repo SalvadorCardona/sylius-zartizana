@@ -23,12 +23,12 @@ class ShopUser extends BaseShopUser
     public function setMarketPlaceVendor(?MarketPlaceVendor $marketplaceVendor): self
     {
         // unset the owning side of the relation if necessary
-        if ($marketplaceVendor === null && $this->marketplaceVendor !== null) {
+        if (null === $marketplaceVendor && null !== $this->marketplaceVendor) {
             $this->marketplaceVendor->setUser(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($marketplaceVendor !== null && $marketplaceVendor->getUser() !== $this) {
+        if (null !== $marketplaceVendor && $marketplaceVendor->getUser() !== $this) {
             $marketplaceVendor->setUser($this);
         }
 

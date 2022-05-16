@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace App\Domain\MarketPlace\Service;
 
@@ -19,7 +19,8 @@ class MarketPlaceVendorService
     /**
      * @throws Exception
      */
-    public function createVendor(int $shopUserId, MarketPlaceVendorAddress $marketPlaceVendorAddress): MarketPlaceVendor {
+    public function createVendor(int $shopUserId, MarketPlaceVendorAddress $marketPlaceVendorAddress): MarketPlaceVendor
+    {
         $repository = $this->entityManager->getRepository(ShopUser::class);
         /** @var ShopUser|null $shopUser */
         $shopUser = $repository->findOneBy(['id' => $shopUserId]);

@@ -1,24 +1,24 @@
 <?php
+
 declare(strict_types=1);
 
-
 namespace App\Domain\MarketPlace\DataPersister;
-
 
 use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 use App\Domain\MarketPlace\Dto\MarketPlaceVendorCreate;
 use App\Domain\MarketPlace\Entity\MarketPlaceVendor;
-use App\Domain\MarketPlace\Entity\MarketPlaceVendorAddress;
 use App\Domain\MarketPlace\Service\MarketPlaceVendorService;
 use App\Entity\User\ShopUser;
 use Exception;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Sylius\Bundle\ApiBundle\Context\TokenBasedUserContext;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class MarketPlaceVendorCreatePersister implements DataPersisterInterface
 {
-    public function __construct(private TokenBasedUserContext $userContext, private MarketPlaceVendorService $martketplaceVendorService)
-    {
+    public function __construct(
+        private TokenBasedUserContext $userContext,
+        private MarketPlaceVendorService $marketPlaceVendorService
+    ) {
     }
 
     public function supports($data): bool
@@ -28,9 +28,8 @@ class MarketPlaceVendorCreatePersister implements DataPersisterInterface
 
     /**
      * @param MarketPlaceVendorCreate $data
-     * @return MarketPlaceVendor
      */
-    public function persist($data)
+    public function persist($data): MarketPlaceVendor
     {
         /** @var ShopUser|null $user */
         $user = $this->userContext->getUser();
@@ -40,7 +39,10 @@ class MarketPlaceVendorCreatePersister implements DataPersisterInterface
         }
 
         try {
-            $marketPlaceVendor = $this->martketplaceVendorService->createVendor($user->getId(), $data->getMarketPlaceVendorAddress());
+            $marketPlaceVendor = $this->marketPlaceVendorService->createVendor(
+                $user->getId(),
+                $data->getMarketPlaceVendorAddress()
+            );
         } catch (Exception $e) {
             throw new BadRequestException($e->getMessage());
         }
@@ -48,9 +50,8 @@ class MarketPlaceVendorCreatePersister implements DataPersisterInterface
         return $marketPlaceVendor;
     }
 
-
-    public function remove($data)
+    public function remove($data): bool
     {
-        // TODO: Implement remove() method.
+        return true;
     }
 }

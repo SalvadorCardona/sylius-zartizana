@@ -12,15 +12,18 @@ class MarketPlaceVendorAddress
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[Groups(['shop:create:vendor'])]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $city;
 
-    #[ORM\OneToOne(mappedBy: 'marketPlaceVendorAddress', targetEntity: MarketPlaceVendor::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(
+        mappedBy: 'marketPlaceVendorAddress',
+        targetEntity: MarketPlaceVendor::class,
+        cascade: ['persist', 'remove']
+    )]
     private ?MarketPlaceVendor $marketPlaceVendor;
-
 
     public function getId(): ?int
     {
@@ -47,12 +50,12 @@ class MarketPlaceVendorAddress
     public function setMarketPlaceVendor(?MarketPlaceVendor $marketPlaceVendor): self
     {
         // unset the owning side of the relation if necessary
-        if ($marketPlaceVendor === null && $this->marketPlaceVendor !== null) {
+        if (null === $marketPlaceVendor && null !== $this->marketPlaceVendor) {
             $this->marketPlaceVendor->setMarketPlaceVendorAddress(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($marketPlaceVendor !== null && $marketPlaceVendor->getMarketPlaceVendorAddress() !== $this) {
+        if (null !== $marketPlaceVendor && $marketPlaceVendor->getMarketPlaceVendorAddress() !== $this) {
             $marketPlaceVendor->setMarketPlaceVendorAddress($this);
         }
 
@@ -60,5 +63,4 @@ class MarketPlaceVendorAddress
 
         return $this;
     }
-
 }

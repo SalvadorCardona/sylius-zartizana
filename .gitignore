@@ -40,3 +40,5 @@
 !/config/jwt/*-test.pem
 ###< lexik/jwt-authentication-bundle ###
 .idea
+/.php-cs-fixer.cache
+/.php-cs-fixer.dist.php
