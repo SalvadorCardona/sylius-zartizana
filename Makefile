@@ -20,7 +20,7 @@ api-schema:
 	rm -f api.json
 
 start-prod:
-	APP_ENV=prod docker-compose -f docker-compose.prod.yml up -d
+	APP_ENV=prod docker-compose -f docker-compose.prod.yml up
 
 start-dev:
 	APP_ENV=dev docker-compose up
