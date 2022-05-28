@@ -6,7 +6,7 @@
       <option name="EXTENSIONS" value="php,js,css,inc" />
     </inspection_tool>
     <inspection_tool class="PhpStanGlobal" enabled="true" level="WEAK WARNING" enabled_by_default="true">
-      <option name="config" value="\\wsl$\Ubuntu\home\salva\workspace\zartizana-workspace\sylius-zartizana\phpstan.neon" />
+      <option name="config" value="/home/salva/workspace/zartizana-workspace/sylius-zartizana/phpstan.neon" />
     </inspection_tool>
   </profile>
 </component>
