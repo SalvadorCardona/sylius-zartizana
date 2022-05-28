@@ -6,7 +6,7 @@ services:
         volumes:
             - ./:/var/www
             - ./docker/nginx/conf.d/:/etc/nginx/conf.d
-#            - ./var/log:/var/log/nginx
+            - ./var/log:/var/log/nginx
         depends_on:
             - php-fpm
         ports:
