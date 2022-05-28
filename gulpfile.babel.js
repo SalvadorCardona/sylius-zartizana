@@ -49,10 +49,10 @@ watchAdmin.description = 'Watch admin asset sources and rebuild on changes.';
 // };
 // watchShop.description = 'Watch shop asset sources and rebuild on changes.';
 
-export const build = gulp.parallel(buildAdmin, buildShop);
+export const build = gulp.parallel(buildAdmin);
 build.description = 'Build assets.';
 
-export const watch = gulp.parallel(watchAdmin, watchShop);
+export const watch = gulp.parallel(watchAdmin);
 watch.description = 'Watch asset sources and rebuild on changes.';
 
 gulp.task('admin', buildAdmin);
