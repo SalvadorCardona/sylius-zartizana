@@ -10,11 +10,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Id\UuidGenerator;
 use Doctrine\ORM\Mapping as ORM;
+use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: MarketPlaceVendorRepository::class)]
 #[ApiResource]
-class MarketPlaceVendor
+class MarketPlaceVendor implements ResourceInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]

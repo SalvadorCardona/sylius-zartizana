@@ -20,7 +20,7 @@ api-schema:
 	rm -f api.json
 
 start-prod:
-	APP_ENV=prod docker-compose -f docker-compose.prod.yml up
+	APP_ENV=prod docker-compose -f docker-compose.prod.yml up -d
 
 start-dev:
 	APP_ENV=prod docker-compose up
@@ -35,3 +35,8 @@ lint-fix:
 
 rector:
 	$(PHP_CMD) vendor/bin/rector process src
+
+mep:
+	git pull
+	$(PHP_CMD) bin/console doctrine:migration:migrate -n
+	$(PHP_CMD) bin/console c:c --env=prod

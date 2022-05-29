@@ -37,3 +37,7 @@ services:
     App\Domain\MarketPlace\DataPersister\MarketPlaceVendorCreatePersister:
         arguments:
             $userContext: '@Sylius\Bundle\ApiBundle\Context\UserContextInterface'
+
+    App\Domain\MarketPlace\Event\AdminMenuListener:
+        tags:
+            - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems }

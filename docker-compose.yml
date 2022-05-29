@@ -35,7 +35,7 @@ services:
         depends_on:
             - db
         environment:
-            - APP_ENV=prod
+            - APP_ENV=dev
             - APP_SECRET=${APP_SECRET}
             - DATABASE_URL=${DATABASE_URL}
         volumes:

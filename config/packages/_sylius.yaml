@@ -9,10 +9,46 @@ imports:
 
 parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'
-    
+
+sylius_grid:
+    grids:
+        app_admin_market_place_vendor:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: App\Domain\MarketPlace\Entity\MarketPlaceVendor
+            fields:
+                id:
+                    type: string
+                    label: sylius.ui.id
+#                description:
+#                    type: string
+#                    label: sylius.ui.description
+#                enabled:
+#                    type: twig
+#                    label: sylius.ui.enabled
+#                    options:
+#                        template: "@SyliusUi/Grid/Field/enabled.html.twig"
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete
+                        
+sylius_resource:
+    resources:
+        app.market_place_vendor:
+            driver: doctrine/orm 
+            classes:
+                model: App\Domain\MarketPlace\Entity\MarketPlaceVendor
+
 sylius_api:
     enabled: true
-    
+
 sylius_addressing:
     resources:
         address:

@@ -7,6 +7,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 /**
  * @extends ServiceEntityRepository<MarketPlaceVendor>
@@ -16,7 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method MarketPlaceVendor[]    findAll()
  * @method MarketPlaceVendor[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MarketPlaceVendorRepository extends ServiceEntityRepository
+class MarketPlaceVendorRepository extends ServiceEntityRepository implements RepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -27,7 +29,7 @@ class MarketPlaceVendorRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(MarketPlaceVendor $entity, bool $flush = true): void
+    public function add(MarketPlaceVendor|ResourceInterface $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +41,7 @@ class MarketPlaceVendorRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(MarketPlaceVendor $entity, bool $flush = true): void
+    public function remove(MarketPlaceVendor|ResourceInterface $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -75,4 +77,8 @@ class MarketPlaceVendorRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function createPaginator(array $criteria = [], array $sorting = []): iterable
+    {
+        return [];
+    }
 }
