@@ -20,4 +20,8 @@ WORKDIR /var/www
 
 CMD composer i -o ; wait-for-it db:5432 -- bin/console doctrine:migrations:migrate -n;  php-fpm
 
+RUN chown -R www-data /var/www
+RUN chmod -R 777 /var/www
+USER www-data
+
 EXPOSE 9000 9003
