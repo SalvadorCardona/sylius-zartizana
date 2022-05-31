@@ -21,9 +21,9 @@ sylius_grid:
                 id:
                     type: string
                     label: sylius.ui.id
-#                description:
-#                    type: string
-#                    label: sylius.ui.description
+                user.email:
+                    type: string
+                    label: sylius.ui.email
 #                enabled:
 #                    type: twig
 #                    label: sylius.ui.enabled
@@ -45,6 +45,7 @@ sylius_resource:
             driver: doctrine/orm 
             classes:
                 model: App\Domain\MarketPlace\Entity\MarketPlaceVendor
+                repository: App\Domain\MarketPlace\Repository\MarketPlaceVendorRepository
 
 sylius_api:
     enabled: true

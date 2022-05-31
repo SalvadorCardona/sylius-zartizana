@@ -23,7 +23,7 @@ start-prod:
 	APP_ENV=prod docker-compose -f docker-compose.prod.yml up -d
 
 start-dev:
-	APP_ENV=prod docker-compose up
+	APP_ENV=dev docker-compose up
 
 lint:
 	$(PHP_CMD) vendor/bin/phpcs

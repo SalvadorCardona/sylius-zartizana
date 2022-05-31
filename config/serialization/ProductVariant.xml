@@ -19,9 +19,9 @@
 <!--        <attribute name="id">-->
 <!--            <group>shop:product:read</group>-->
 <!--        </attribute>-->
-<!--        <attribute name="code">-->
-<!--            <group>shop:product:read</group>-->
-<!--        </attribute>-->
+        <attribute name="code">
+            <group>shop:product:read</group>
+        </attribute>
 <!--        <attribute name="product">-->
 <!--            <group>shop:product:read</group>-->
 <!--        </attribute>-->

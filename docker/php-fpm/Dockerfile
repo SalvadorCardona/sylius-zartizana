@@ -2,6 +2,8 @@ FROM php:8.0-fpm
 
 COPY wait-for-it.sh /usr/bin/wait-for-it
 
+RUN usermod -u 1000 www-data
+
 RUN chmod +x /usr/bin/wait-for-it
 
 RUN apt-get update && \
@@ -19,9 +21,5 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www
 
 CMD composer i -o ; wait-for-it db:5432 -- bin/console doctrine:migrations:migrate -n;  php-fpm
-
-RUN chown -R www-data /var/www
-RUN chmod -R 777 /var/www
-USER www-data
 
 EXPOSE 9000 9003
