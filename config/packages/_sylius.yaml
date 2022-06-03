@@ -20,10 +20,13 @@ sylius_grid:
             fields:
                 id:
                     type: string
-                    label: sylius.ui.id
+                    label: uid
                 user.email:
                     type: string
                     label: sylius.ui.email
+                user.id:
+                    type: string
+                    label: user id
 #                enabled:
 #                    type: twig
 #                    label: sylius.ui.enabled
@@ -269,13 +272,11 @@ sylius_user:
                 classes:
                     model: App\Entity\User\UserOAuth
 
-#sylius_shop:
-#    product_grid:
-#        include_all_descendants: true
-#
-#sylius_theme:
-#    sources:
-#        filesystem:
-#            scan_depth: 1
-#            directories:
-#                - "%kernel.project_dir%/themes"
+sylius_mailer:
+    sender:
+        name: Movie Database Example
+        address: no-reply@movie-database-example.com
+    emails:
+        movie_added_notification:
+            subject: A new movie {{ movie.title }} has been submitted
+            template: "Email/custom.email.html.twig"

@@ -332,10 +332,9 @@
   </component>
   <component name="PhpProjectServersManager">
     <servers>
-      <server host="localhost" id="2b059880-b4be-43d2-a33b-36bee5eb9721" name="My Server" use_path_mappings="true">
+      <server host="localhost" id="2b059880-b4be-43d2-a33b-36bee5eb9721" name="My Server" port="8080" use_path_mappings="true">
         <path_mappings>
-          <mapping local-root="$PROJECT_DIR$" remote-root="/srv/sylius" />
-          <mapping local-root="$PROJECT_DIR$/public" remote-root="/srv/sylius/public" />
+          <mapping local-root="$PROJECT_DIR$" remote-root="/var/www" />
         </path_mappings>
       </server>
     </servers>

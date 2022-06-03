@@ -53,6 +53,7 @@ class MarketPlaceVendor implements ResourceInterface
     )]
     private ?MarketPlaceBankAccount $marketPlaceBankAccount;
 
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
