@@ -272,11 +272,34 @@ sylius_user:
                 classes:
                     model: App\Entity\User\UserOAuth
 
+#sylius_mailer:
+#    sender:
+#        name: Movie Database Example
+#        address: no-reply@movie-database-example.com
+#    emails:
+#        movie_added_notification:
+#            subject: A new movie {{ movie.title }} has been submitted
+#            template: "Email/custom.email.html.twig"
 sylius_mailer:
-    sender:
-        name: Movie Database Example
-        address: no-reply@movie-database-example.com
     emails:
-        movie_added_notification:
-            subject: A new movie {{ movie.title }} has been submitted
-            template: "Email/custom.email.html.twig"
+        contact_request:
+            subject: sylius.emails.contact_request.subject
+            template: "Email/contactRequest.html.twig"
+        order_confirmation:
+            subject: sylius.emails.order_confirmation.subject
+            template: "Email/orderConfirmation.html.twig"
+        user_registration:
+            subject: sylius.emails.user_registration.subject
+            template: "Email/userRegistration.html.twig"
+        password_reset:
+            subject: sylius.emails.user.password_reset.subject
+            template: "Email/passwordReset.html.twig"
+        reset_password_token:
+            subject: sylius.emails.user.password_reset.subject
+            template: "Email/passwordReset.html.twig"
+        reset_password_pin:
+            subject: sylius.emails.user.password_reset.subject
+            template: "Email/passwordReset.html.twig"
+        verification_token:
+            subject: sylius.emails.user.verification_token.subject
+            template: "Email/verification.html.twig"
