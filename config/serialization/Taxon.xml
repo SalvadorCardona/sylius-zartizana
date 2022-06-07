@@ -5,9 +5,9 @@
             xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
 >
     <class name="Sylius\Component\Core\Model\Taxon">
-<!--        <attribute name="id">-->
-<!--            <group>shop:product:read</group>-->
-<!--        </attribute>-->
+        <attribute name="id">
+            <group>shop:create:vendor</group>
+        </attribute>
 <!--        <attribute name="code">-->
 <!--            <group>shop:product:read</group>-->
 <!--        </attribute>-->

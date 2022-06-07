@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\MarketPlace\DataPersister;
 
 use ApiPlatform\Core\DataPersister\DataPersisterInterface;
-use App\Domain\MarketPlace\Dto\MarketPlaceVendorCreate;
 use App\Domain\MarketPlace\Entity\MarketPlaceVendor;
 use App\Domain\MarketPlace\Service\MarketPlaceVendorService;
 use App\Entity\User\ShopUser;
@@ -21,13 +20,16 @@ class MarketPlaceVendorCreatePersister implements DataPersisterInterface
     ) {
     }
 
-    public function supports($data): bool
+    /**
+     * @param array<string, string> $context
+     */
+    public function supports($data, array $context = []): bool
     {
-        return $data instanceof MarketPlaceVendorCreate;
+        return $data instanceof MarketPlaceVendor && $context['collection_operation_name'] === 'create_vendor';
     }
 
     /**
-     * @param MarketPlaceVendorCreate $data
+     * @param MarketPlaceVendor $data
      */
     public function persist($data): MarketPlaceVendor
     {
@@ -41,7 +43,7 @@ class MarketPlaceVendorCreatePersister implements DataPersisterInterface
         try {
             $marketPlaceVendor = $this->marketPlaceVendorService->createVendor(
                 $user->getId(),
-                $data->getMarketPlaceVendorAddress()
+                $data
             );
         } catch (Exception $e) {
             throw new BadRequestException($e->getMessage());

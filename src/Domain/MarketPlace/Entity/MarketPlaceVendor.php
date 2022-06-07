@@ -6,17 +6,30 @@ namespace App\Domain\MarketPlace\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Domain\MarketPlace\Repository\MarketPlaceVendorRepository;
-use App\Entity\Product\Product;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\Product\ProductVariant;
+use App\Entity\Taxonomy\Taxon;
 use App\Entity\User\ShopUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Id\UuidGenerator;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: MarketPlaceVendorRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: [
+        'create_vendor' => [
+            'method' => 'POST',
+            'path' => '/shop/market-place-vendors/create',
+            'denormalization_context' => ['groups' => 'shop:create:vendor'],
+            'output' => false,
+        ],
+    ],
+    itemOperations: []
+)]
 class MarketPlaceVendor implements ResourceInterface
 {
     public const CREATED = 'CREATED';
@@ -29,19 +42,8 @@ class MarketPlaceVendor implements ResourceInterface
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     private ?Uuid $id;
 
-    #[ORM\OneToOne(inversedBy: 'marketplaceVendor', targetEntity: ShopUser::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'marketplaceVendor', targetEntity: ShopUser::class)]
     private ?ShopUser $user;
-
-    /** @var Collection<int, Product> */
-    #[ORM\OneToMany(mappedBy: 'marketplaceVendor', targetEntity: Product::class)]
-    private Collection $products;
-
-    #[ORM\OneToOne(
-        inversedBy: 'marketPlaceVendor',
-        targetEntity: MarketPlaceVendorAddress::class,
-        cascade: ['persist', 'remove']
-    )]
-    private MarketPlaceVendorAddress $marketPlaceVendorAddress;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $state = self::CREATED;
@@ -53,10 +55,39 @@ class MarketPlaceVendor implements ResourceInterface
     )]
     private ?MarketPlaceBankAccount $marketPlaceBankAccount;
 
+    /** @var Collection<int, MarketPlaceStore> */
+    #[Groups(['shop:create:vendor'])]
+    #[ORM\OneToMany(
+        mappedBy: 'marketPlaceVendor',
+        targetEntity: MarketPlaceStore::class,
+        cascade: ['persist', 'remove']
+    )]
+    private Collection $marketPlaceStores;
+
+    #[Groups(['shop:create:vendor'])]
+    #[ORM\ManyToOne(targetEntity: Taxon::class)]
+    private ?Taxon $mainTaxon;
+
+    #[Groups(['shop:create:vendor'])]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\NotBlank]
+    private ?string $siret;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $profilePicture;
+
+    /** @var Collection<int, ProductVariant> */
+    #[ORM\OneToMany(mappedBy: 'marketPlaceVendor', targetEntity: ProductVariant::class)]
+    private Collection $productVariants;
+
+    #[Groups(['shop:create:vendor'])]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $phoneNumber;
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        $this->marketPlaceStores = new ArrayCollection();
+        $this->productVariants = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -72,48 +103,6 @@ class MarketPlaceVendor implements ResourceInterface
     public function setUser(?ShopUser $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Product>
-     */
-    public function getProducts(): Collection
-    {
-        return $this->products;
-    }
-
-    public function addProduct(Product $product): self
-    {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-            $product->setMarketPlaceVendor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Product $product): self
-    {
-        if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getMarketPlaceVendor() === $this) {
-                $product->setMarketPlaceVendor(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getMarketPlaceVendorAddress(): ?MarketPlaceVendorAddress
-    {
-        return $this->marketPlaceVendorAddress;
-    }
-
-    public function setMarketPlaceVendorAddress(?MarketPlaceVendorAddress $marketPlaceVendorAddress): self
-    {
-        $this->marketPlaceVendorAddress = $marketPlaceVendorAddress;
 
         return $this;
     }
@@ -148,5 +137,113 @@ class MarketPlaceVendor implements ResourceInterface
     public function setState(?string $state): void
     {
         $this->state = $state;
+    }
+
+    /**
+     * @return Collection<int, MarketPlaceStore>
+     */
+    public function getMarketPlaceStores(): Collection
+    {
+        return $this->marketPlaceStores;
+    }
+
+    public function addMarketPlaceStore(MarketPlaceStore $marketPlaceStore): self
+    {
+        if (!$this->marketPlaceStores->contains($marketPlaceStore)) {
+            $this->marketPlaceStores[] = $marketPlaceStore;
+            $marketPlaceStore->setMarketPlaceVendor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMarketPlaceStore(MarketPlaceStore $marketPlaceStore): self
+    {
+        if ($this->marketPlaceStores->removeElement($marketPlaceStore)) {
+            // set the owning side to null (unless already changed)
+            if ($marketPlaceStore->getMarketPlaceVendor() === $this) {
+                $marketPlaceStore->setMarketPlaceVendor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getMainTaxon(): ?Taxon
+    {
+        return $this->mainTaxon;
+    }
+
+    public function setMainTaxon(?Taxon $mainTaxon): self
+    {
+        $this->mainTaxon = $mainTaxon;
+
+        return $this;
+    }
+
+    public function getSiret(): ?string
+    {
+        return $this->siret;
+    }
+
+    public function setSiret(?string $siret): self
+    {
+        $this->siret = $siret;
+
+        return $this;
+    }
+
+    public function getProfilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(?string $profilePicture): self
+    {
+        $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductVariant>
+     */
+    public function getProductVariants(): Collection
+    {
+        return $this->productVariants;
+    }
+
+    public function addProductVariant(ProductVariant $productVariant): self
+    {
+        if (!$this->productVariants->contains($productVariant)) {
+            $this->productVariants[] = $productVariant;
+            $productVariant->setMarketPlaceVendor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductVariant(ProductVariant $productVariant): self
+    {
+        if ($this->productVariants->removeElement($productVariant)) {
+            // set the owning side to null (unless already changed)
+            if ($productVariant->getMarketPlaceVendor() === $this) {
+                $productVariant->setMarketPlaceVendor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
     }
 }

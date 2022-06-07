@@ -19,7 +19,7 @@ class MarketPlaceVendorService
     /**
      * @throws Exception
      */
-    public function createVendor(int $shopUserId, MarketPlaceVendorAddress $marketPlaceVendorAddress): MarketPlaceVendor
+    public function createVendor(int $shopUserId, MarketPlaceVendor $marketPlaceVendor): MarketPlaceVendor
     {
         $repository = $this->entityManager->getRepository(ShopUser::class);
         /** @var ShopUser|null $shopUser */
@@ -33,9 +33,7 @@ class MarketPlaceVendorService
             throw new Exception('User is Vendor');
         }
 
-        $marketPlaceVendor = new MarketPlaceVendor();
         $marketPlaceVendor->setUser($shopUser);
-        $marketPlaceVendor->setMarketPlaceVendorAddress($marketPlaceVendorAddress);
 
         $this->entityManager->persist($marketPlaceVendor);
         $this->entityManager->flush();
