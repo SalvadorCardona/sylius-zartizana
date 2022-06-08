@@ -1,46 +1,12 @@
 imports:
     - { resource: "@SyliusCoreBundle/Resources/config/app/config.yml" }
-
     - { resource: "@SyliusAdminBundle/Resources/config/app/config.yml" }
     - { resource: "@SyliusApiBundle/Resources/config/app/config.yaml" }
-
-#    - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
     - { resource: "@SyliusPayPalPlugin/Resources/config/config.yaml" }
+
 
 parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'
-
-sylius_grid:
-    grids:
-        app_admin_market_place_vendor:
-            driver:
-                name: doctrine/orm
-                options:
-                    class: App\Domain\MarketPlace\Entity\MarketPlaceVendor
-            fields:
-                id:
-                    type: string
-                    label: uid
-                user.email:
-                    type: string
-                    label: sylius.ui.email
-                user.id:
-                    type: string
-                    label: user id
-#                enabled:
-#                    type: twig
-#                    label: sylius.ui.enabled
-#                    options:
-#                        template: "@SyliusUi/Grid/Field/enabled.html.twig"
-            actions:
-                main:
-                    create:
-                        type: create
-                item:
-                    update:
-                        type: update
-                    delete:
-                        type: delete
                         
 sylius_resource:
     resources:

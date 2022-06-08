@@ -28,7 +28,11 @@ use Symfony\Component\Uid\Uuid;
             'output' => false,
         ],
     ],
-    itemOperations: []
+    itemOperations: [
+        'get' => [
+            "security" => "is_granted('ROLE_ADMIN')"
+        ]
+    ]
 )]
 class MarketPlaceVendor implements ResourceInterface
 {
@@ -45,6 +49,7 @@ class MarketPlaceVendor implements ResourceInterface
     #[ORM\OneToOne(inversedBy: 'marketplaceVendor', targetEntity: ShopUser::class)]
     private ?ShopUser $user;
 
+    #[Groups(['shop:customer:read'])]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $state = self::CREATED;
 

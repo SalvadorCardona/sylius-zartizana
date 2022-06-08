@@ -1,5 +1,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+
+
 parameters:
     locale: en_US
 
@@ -41,3 +43,13 @@ services:
     App\Domain\MarketPlace\Event\AdminMenuListener:
         tags:
             - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems }
+
+    app.form.extension.type.customer_profile:
+        class: App\Domain\MarketPlace\Type\ProductVariantType
+        tags:
+            - { name: form.type_extension, extended_type: Sylius\Bundle\ProductBundle\Form\Type\ProductVariantType, priority: -5 }
+
+    sylius.listener.api_authentication_success_listener:
+        class: App\Domain\MarketPlace\EventListener\AuthenticationSuccessListener
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }

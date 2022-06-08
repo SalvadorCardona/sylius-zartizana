@@ -1,0 +1,31 @@
+sylius_grid:
+    grids:
+        app_admin_market_place_vendor:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: App\Domain\MarketPlace\Entity\MarketPlaceVendor
+            fields:
+                id:
+                    type: string
+                    label: uid
+                user.email:
+                    type: string
+                    label: sylius.ui.email
+                user.id:
+                    type: string
+                    label: user id
+            #                enabled:
+            #                    type: twig
+            #                    label: sylius.ui.enabled
+            #                    options:
+            #                        template: "@SyliusUi/Grid/Field/enabled.html.twig"
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete
