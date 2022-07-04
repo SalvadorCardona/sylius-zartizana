@@ -12,7 +12,7 @@ use Exception;
 use Sylius\Bundle\ApiBundle\Context\TokenBasedUserContext;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
-class MarketPlaceVendorCreatePersister implements DataPersisterInterface
+final class MarketPlaceVendorCreatePersister implements DataPersisterInterface
 {
     public function __construct(
         private TokenBasedUserContext $userContext,
@@ -21,7 +21,7 @@ class MarketPlaceVendorCreatePersister implements DataPersisterInterface
     }
 
     /**
-     * @param array<string, string> $context
+     * @param array<array-key, string> $context
      */
     public function supports($data, array $context = []): bool
     {
@@ -42,7 +42,7 @@ class MarketPlaceVendorCreatePersister implements DataPersisterInterface
 
         try {
             $marketPlaceVendor = $this->marketPlaceVendorService->createVendor(
-                $user->getId(),
+                $user,
                 $data
             );
         } catch (Exception $e) {

@@ -16,13 +16,13 @@ final class ProductVariantType extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 
-        $builder->add('marketPlaceVendor', EntityType::class, [
-            'required' => false,
-            'class' => MarketPlaceVendor::class,
-            'choice_label' => function ($marketPlaceVendor) {
-                return $marketPlaceVendor->getUser()->getEmail();
-            }
-        ])
+//        $builder->add('marketPlaceVendor', EntityType::class, [
+//            'required' => false,
+//            'class' => MarketPlaceVendor::class,
+//            'choice_label' => function ($marketPlaceVendor) {
+//                return $marketPlaceVendor->getUser()->getEmail();
+//            }
+//        ])
         ;
     }
 

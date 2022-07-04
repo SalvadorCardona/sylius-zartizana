@@ -3,9 +3,9 @@ sylius_grid:
         sylius_admin_product_variant:
             sorting:
                 position: asc
-            fields:
-                marketPlaceVendor:
-                    type: string
-                    label: 'MarketPlaceVendor ID'
+#            fields:
+#                marketPlaceVendor:
+#                    type: string
+#                    label: 'MarketPlaceVendor ID'
 
     

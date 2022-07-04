@@ -53,3 +53,11 @@ services:
         class: App\Domain\MarketPlace\EventListener\AuthenticationSuccessListener
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
+
+#    sylius.api.product_variant_product_filter:
+#        parent: 'api_platform.doctrine.orm.search_filter'
+#        arguments: [ { id: 'exact', product: 'exact', marketPlaceVendor.id: 'exact' } ]
+#        tags:  [ 'api_platform.filter' ]
+#        autowire: false
+#        autoconfigure: false
+ 

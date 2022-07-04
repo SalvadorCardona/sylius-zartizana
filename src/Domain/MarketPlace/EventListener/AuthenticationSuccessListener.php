@@ -17,6 +17,7 @@ use ApiPlatform\Core\Api\IriConverterInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 final class AuthenticationSuccessListener
@@ -37,7 +38,11 @@ final class AuthenticationSuccessListener
         /** @var CustomerInterface $customer */
         $customer = $user->getCustomer();
 
-        $data['customer'] = $this->serializer->normalize($customer, null, ['groups' => 'shop:customer:read']);
+        try {
+            $data['customer'] = $this->serializer->normalize($customer, null, ['groups' => 'shop:customer:read']);
+        } catch (ExceptionInterface $e) {
+            $data['customer'] = null;
+        }
 
         $event->setData($data);
     }

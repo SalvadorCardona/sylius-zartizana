@@ -6,17 +6,14 @@ namespace App\Domain\MarketPlace\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Domain\MarketPlace\Repository\MarketPlaceVendorRepository;
-use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\Product\ProductVariant;
 use App\Entity\Taxonomy\Taxon;
 use App\Entity\User\ShopUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Id\UuidGenerator;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MarketPlaceVendorRepository::class)]
 #[ApiResource(
@@ -41,10 +38,10 @@ class MarketPlaceVendor implements ResourceInterface
     public const VALIDATED = 'validated';
 
     #[ORM\Id]
-    #[ORM\Column(type: 'uuid', unique: true)]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
-    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
-    private ?Uuid $id;
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    #[Groups(['shop:customer:read'])]
+    private ?int $id;
 
     #[ORM\OneToOne(inversedBy: 'marketplaceVendor', targetEntity: ShopUser::class)]
     private ?ShopUser $user;
@@ -60,7 +57,7 @@ class MarketPlaceVendor implements ResourceInterface
     )]
     private ?MarketPlaceBankAccount $marketPlaceBankAccount;
 
-    /** @var Collection<int, MarketPlaceStore> */
+    /** @var Collection<array-key, MarketPlaceStore> */
     #[Groups(['shop:create:vendor'])]
     #[ORM\OneToMany(
         mappedBy: 'marketPlaceVendor',
@@ -81,21 +78,21 @@ class MarketPlaceVendor implements ResourceInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $profilePicture;
 
-    /** @var Collection<int, ProductVariant> */
-    #[ORM\OneToMany(mappedBy: 'marketPlaceVendor', targetEntity: ProductVariant::class)]
-    private Collection $productVariants;
-
     #[Groups(['shop:create:vendor'])]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $phoneNumber;
 
+    /** @var Collection<array-key, MarketPlaceProduct> */
+    #[ORM\OneToMany(mappedBy: 'MarketPlaceVendor', targetEntity: MarketPlaceProduct::class)]
+    private Collection $marketPlaceProducts;
+
     public function __construct()
     {
         $this->marketPlaceStores = new ArrayCollection();
-        $this->productVariants = new ArrayCollection();
+        $this->marketPlaceProducts = new ArrayCollection();
     }
 
-    public function getId(): ?Uuid
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -145,7 +142,7 @@ class MarketPlaceVendor implements ResourceInterface
     }
 
     /**
-     * @return Collection<int, MarketPlaceStore>
+     * @return Collection<array-key, MarketPlaceStore>
      */
     public function getMarketPlaceStores(): Collection
     {
@@ -210,36 +207,6 @@ class MarketPlaceVendor implements ResourceInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, ProductVariant>
-     */
-    public function getProductVariants(): Collection
-    {
-        return $this->productVariants;
-    }
-
-    public function addProductVariant(ProductVariant $productVariant): self
-    {
-        if (!$this->productVariants->contains($productVariant)) {
-            $this->productVariants[] = $productVariant;
-            $productVariant->setMarketPlaceVendor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProductVariant(ProductVariant $productVariant): self
-    {
-        if ($this->productVariants->removeElement($productVariant)) {
-            // set the owning side to null (unless already changed)
-            if ($productVariant->getMarketPlaceVendor() === $this) {
-                $productVariant->setMarketPlaceVendor(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getPhoneNumber(): ?string
     {
         return $this->phoneNumber;
@@ -248,6 +215,41 @@ class MarketPlaceVendor implements ResourceInterface
     public function setPhoneNumber(?string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->id;
+    }
+
+    /**
+     * @return Collection<array-key, MarketPlaceProduct>
+     */
+    public function getMarketPlaceProducts(): Collection
+    {
+        return $this->marketPlaceProducts;
+    }
+
+    public function addMarketPlaceProduct(MarketPlaceProduct $marketPlaceProduct): self
+    {
+        if (!$this->marketPlaceProducts->contains($marketPlaceProduct)) {
+            $this->marketPlaceProducts[] = $marketPlaceProduct;
+            $marketPlaceProduct->setMarketPlaceVendor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMarketPlaceProduct(MarketPlaceProduct $marketPlaceProduct): self
+    {
+        if ($this->marketPlaceProducts->removeElement($marketPlaceProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($marketPlaceProduct->getMarketPlaceVendor() === $this) {
+                $marketPlaceProduct->setMarketPlaceVendor(null);
+            }
+        }
 
         return $this;
     }

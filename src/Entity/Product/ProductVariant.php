@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Entity\Product;
 
-use App\Domain\MarketPlace\Entity\MarketPlaceVendor;
+use App\Domain\MarketPlace\Entity\MarketPlaceProduct;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\ProductVariant as BaseProductVariant;
 use Sylius\Component\Product\Model\ProductVariantTranslationInterface;
@@ -13,22 +15,44 @@ use Sylius\Component\Product\Model\ProductVariantTranslationInterface;
 #[ORM\Table(name: 'sylius_product_variant')]
 class ProductVariant extends BaseProductVariant
 {
-    #[ORM\ManyToOne(targetEntity: MarketPlaceVendor::class, inversedBy: 'productVariants')]
-    private ?MarketPlaceVendor $marketPlaceVendor;
+    /** @var Collection<int, MarketPlaceProduct> */
+    #[ORM\ManyToMany(targetEntity: MarketPlaceProduct::class, mappedBy: 'ProductVariant')]
+    private Collection $marketPlaceProducts;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->marketPlaceProducts = new ArrayCollection();
+    }
 
     protected function createTranslation(): ProductVariantTranslationInterface
     {
         return new ProductVariantTranslation();
     }
 
-    public function getMarketPlaceVendor(): ?MarketPlaceVendor
+    /**
+     * @return Collection<int, MarketPlaceProduct>
+     */
+    public function getMarketPlaceProducts(): Collection
     {
-        return $this->marketPlaceVendor;
+        return $this->marketPlaceProducts;
     }
 
-    public function setMarketPlaceVendor(?MarketPlaceVendor $marketPlaceVendor): self
+    public function addMarketPlaceProduct(MarketPlaceProduct $marketPlaceProduct): self
     {
-        $this->marketPlaceVendor = $marketPlaceVendor;
+        if (!$this->marketPlaceProducts->contains($marketPlaceProduct)) {
+            $this->marketPlaceProducts[] = $marketPlaceProduct;
+            $marketPlaceProduct->addProductVariant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMarketPlaceProduct(MarketPlaceProduct $marketPlaceProduct): self
+    {
+        if ($this->marketPlaceProducts->removeElement($marketPlaceProduct)) {
+            $marketPlaceProduct->removeProductVariant($this);
+        }
 
         return $this;
     }
